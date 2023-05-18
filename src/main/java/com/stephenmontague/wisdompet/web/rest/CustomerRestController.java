@@ -4,6 +4,7 @@ import com.stephenmontague.wisdompet.services.CustomerService;
 import com.stephenmontague.wisdompet.web.errors.BadRequestException;
 import com.stephenmontague.wisdompet.web.models.Customer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,23 +28,23 @@ public class CustomerRestController {
         this.customerService = customerService;
     }
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<Customer> getAll(@RequestParam(name = "email", required = false) String email) {
         return this.customerService.getAllCustomers(email);
     }
 
-    @PostMapping
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public Customer createCustomer(@RequestBody Customer customer) {
         return this.customerService.createOrUpdate(customer);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public Customer getCustomer(@PathVariable("id") Long id) {
         return this.customerService.getCustomer(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public Customer updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
         if (!Objects.equals(id, customer.getCustomerId())) {
             throw new BadRequestException("IDs do not match");
@@ -52,7 +53,7 @@ public class CustomerRestController {
         return this.customerService.createOrUpdate(customer);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.RESET_CONTENT)
     public void deleteCustomer(@PathVariable("id") Long id) {
         this.customerService.deleteCustomer(id);
