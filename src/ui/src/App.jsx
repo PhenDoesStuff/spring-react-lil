@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
+import Customers from './pages/Customers';
 
 function App() {
     return (
@@ -10,6 +11,9 @@ function App() {
                 <Routes>
                     <Route path={'/'} element={<Layout/>}>
                         <Route index element={<Home/>}/>
+                    </Route>
+                    <Route path={'/customers'} element={<Layout/>}>
+                        <Route index element={<Customers/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
